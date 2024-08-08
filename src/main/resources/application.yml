@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: "test"
+---
+spring:
+  config:
+    activate:
+      on-profile: "test"
+  application:
+    name: deal
+---
+spring:
+  config:
+    activate:
+      on-profile: "production"
+  application:
+    name: deal
