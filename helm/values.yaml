@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: git.codenrock.com:5050/neo-hack-2024-1232/cnrprod1722867596-team-74124/razrabotka-rabochego-instrumenta-dlya-sinhronizacii-ekspertov-rekrutyorov-i-kandidatov-5883
-  pullPolicy: ALways
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
