@@ -38,7 +38,7 @@ deploy:
   tags:
     - docker
   image: 
-    name: alpine/k8s:latest
+    name: alpine/k8s:1.24.8
     entrypoint: [""] 
   script: 
     - helm template recruitment-wun-backend helm --set image.tag=$CI_COMMIT_SHORT_SHA -n cnrprod1722867596-team-74124 | kubectl apply -f -
