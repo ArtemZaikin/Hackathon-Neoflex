@@ -7,5 +7,5 @@ import java.time.LocalDateTime;
 @Data
 public class TimeSlot {
     private LocalDateTime startDateTime;
-    private int Duration;
+    private int durationMin;
 }
