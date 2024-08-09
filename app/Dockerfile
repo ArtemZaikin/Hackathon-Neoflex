@@ -1,6 +1,6 @@
 #stage 1
 #Start with a base image containing Java runtime
-FROM openjdk:17 as build
+FROM maven:3.8.3-openjdk-17 as build
 
 # Add Maintainer Info
 LABEL maintainer="Aleksei Petrov <peta0982@gmail.com>"
