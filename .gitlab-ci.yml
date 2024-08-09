@@ -41,5 +41,5 @@ deploy:
     name: alpine/helm:latest
     entrypoint: [""] 
   script: 
-    - helm upgrade --install sample-app sample-app --set image.tag=$CI_COMMIT_SHORT_SHA -n neolearn
+    - helm upgrade --install recruitment-wun-backend helm --set image.tag=$CI_COMMIT_SHORT_SHA -n cnrprod1722867596-team-74124
 
