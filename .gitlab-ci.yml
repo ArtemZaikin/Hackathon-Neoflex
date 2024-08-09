@@ -20,7 +20,9 @@ linter:
   stage: test
   tags:
     - docker
-  when: manual
+  rules:
+    - if: CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+      when: manual
   image: oxsecurity/megalinter:v7
   script: [ "true" ]
   variables:
@@ -39,5 +41,5 @@ deploy:
     name: alpine/helm:latest
     entrypoint: [""] 
   script: 
-  - helm upgrade --install sample-app sample-app --set image.tag=$CI_COMMIT_SHORT_SHA -n neolearn
+    - helm upgrade --install sample-app sample-app --set image.tag=$CI_COMMIT_SHORT_SHA -n neolearn
 
