@@ -14,6 +14,8 @@ RUN mvn -Dmaven.test.failure.ignore=true -f pom.xml clean package
 #Same Java runtime
 FROM openjdk:17-slim
 
+EXPOSE 8080
+
 COPY --from=build target/recruiting-0.0.1-SNAPSHOT.jar recruiting-0.0.1-SNAPSHOT.jar
 
 #execute the application
