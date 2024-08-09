@@ -2,6 +2,8 @@ package ru.wakeupneo.recruiting.service;
 
 import ru.wakeupneo.recruiting.dto.MeetingDto;
 
+import java.util.List;
+
 
 public interface MeetingService {
 
@@ -12,4 +14,6 @@ public interface MeetingService {
     void updateMeeting(MeetingDto meetingDto, Long meetingId);
 
     void deleteMeeting(Long meetingId);
+
+    List<MeetingDto> getAllMeetings();
 }

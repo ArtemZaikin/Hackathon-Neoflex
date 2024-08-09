@@ -7,6 +7,7 @@ import ru.wakeupneo.recruiting.model.enums.MeetingStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "meeting")
@@ -14,24 +15,40 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Meeting {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_meeting")
     private Long id;
+
     @Column(name = "meeting_name")
     private String name;
+
     @Column(name = "description")
     private String description;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private MeetingStatus meetingStatus;
+
     @Column(name = "start_time_date")
     private LocalDateTime startDateTime;
+
     @Column(name = "duration_min")
     private int durationMin;
+
     @ManyToOne
     @JoinColumn(name = "direction_id")
     private Direction direction;
+
     @Column(name = "ref_files")
     private String ref;
+
+    @ManyToMany
+    @JoinTable(
+            name = "members_meetings",
+            joinColumns = { @JoinColumn(name = "id_meeting") },
+            inverseJoinColumns = { @JoinColumn(name = "id_person") }
+    )
+    List<User> participants;
 }
