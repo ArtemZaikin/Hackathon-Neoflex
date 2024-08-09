@@ -9,10 +9,10 @@ services:
       PGDATA: "/var/lib/postgresql/data/pgdata"
   recruiting:
     image: recruiting/recruiting:0.0.1-SNAPSHOT
+    ports:
+      - '8080:8080'
     environment:
       - "SPRING_PROFILES_ACTIVE=test"
     depends_on:
       postgres:
-        condition: service_started
-      kafka:
         condition: service_started
