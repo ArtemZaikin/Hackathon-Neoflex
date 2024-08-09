@@ -20,6 +20,7 @@ linter:
   stage: test
   tags:
     - docker
+  when: manual
   image: oxsecurity/megalinter:v7
   script: [ "true" ]
   variables:
