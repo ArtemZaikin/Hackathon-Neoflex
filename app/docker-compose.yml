@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:15.5
+    environment:
+      POSTGRES_DB: "recruiting"
+      POSTGRES_USER: "recruiting"
+      POSTGRES_PASSWORD: "recruiting"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+  recruiting:
+    image: recruiting/recruiting:0.0.1-SNAPSHOT
+    ports:
+      - '8080:8080'
+    environment:
+      - "SPRING_PROFILES_ACTIVE=test"
+    depends_on:
+      postgres:
+        condition: service_started
