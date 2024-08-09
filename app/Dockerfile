@@ -14,7 +14,7 @@ RUN mvn -Dmaven.test.failure.ignore=true -f pom.xml clean package
 #Same Java runtime
 FROM openjdk:17-slim
 
-COPY --from=build target/recruiting-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build target/recruiting-0.0.1-SNAPSHOT.jar recruiting-0.0.1-SNAPSHOT.jar
 
 #execute the application
-ENTRYPOINT ["java","-cp","app:app/lib/*","ru.wakeupneo.recruiting.RecruitingApplication"]
+ENTRYPOINT ["java","-cp","recruiting-0.0.1-SNAPSHOT.jar","ru.wakeupneo.recruiting.RecruitingApplication"]
