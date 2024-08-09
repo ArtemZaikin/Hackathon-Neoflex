@@ -21,8 +21,9 @@ linter:
   tags:
     - docker
   image: oxsecurity/megalinter:v7
-  before_script:
-    -> [[ $CI_COMMIT_BRANCH -eq $CI_DEFAULT_BRANCH ]]; echo "Skipping linter on non default branch!" && exit 0;
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      allow_failure: true
   script: [ "true" ]
   variables:
     DEFAULT_WORKSPACE: $CI_PROJECT_DIR
