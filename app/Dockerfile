@@ -10,13 +10,11 @@ ADD app .
 # build app 
 RUN mvn -Dmaven.test.failure.ignore=true -f pom.xml clean package
 
-RUN ls && ls target
-
 #stage 2
 #Same Java runtime
 FROM openjdk:17-slim
 
-COPY --from=build app.jar app.jar
+COPY --from=build target/recruiting-0.0.1-SNAPSHOT.jar app.jar
 
 #execute the application
 ENTRYPOINT ["java","-cp","app:app/lib/*","ru.wakeupneo.recruiting.RecruitingApplication"]
