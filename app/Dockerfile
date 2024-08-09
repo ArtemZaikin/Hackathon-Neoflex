@@ -1,0 +1,22 @@
+#stage 1
+#Start with a base image containing Java runtime
+FROM maven:3.8.3-openjdk-17 as build
+
+# Add Maintainer Info
+LABEL maintainer="Aleksei Petrov <peta0982@gmail.com>"
+
+ADD app .
+
+# build app 
+RUN mvn -Dmaven.test.failure.ignore=true -f pom.xml clean package
+
+#stage 2
+#Same Java runtime
+FROM openjdk:17-slim
+
+EXPOSE 8080
+
+COPY --from=build target/recruiting-0.0.1-SNAPSHOT.jar recruiting-0.0.1-SNAPSHOT.jar
+
+#execute the application
+ENTRYPOINT ["java","-cp","recruiting-0.0.1-SNAPSHOT.jar","ru.wakeupneo.recruiting.RecruitingApplication"]
