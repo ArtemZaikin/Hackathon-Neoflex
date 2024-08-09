@@ -1,0 +1,42 @@
+stages: 
+  - build
+  - test
+  - deploy  
+ 
+docker-build: 
+  stage: build
+  tags:
+    - docker
+  image: 
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [""]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/app/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}"
+
+linter:
+  stage: test
+  tags:
+    - docker
+  image: oxsecurity/megalinter:v7
+  script: [ "true" ]
+  variables:
+    DEFAULT_WORKSPACE: $CI_PROJECT_DIR
+  artifacts:
+    when: always
+    paths:
+      - megalinter-reports
+    expire_in: 1 week
+ 
+deploy: 
+  stage: deploy
+  tags:
+    - docker
+  image: 
+    name: alpine/helm:latest
+    entrypoint: [""] 
+  script: 
+  - helm upgrade --install sample-app sample-app --set image.tag=$CI_COMMIT_SHORT_SHA -n neolearn
+

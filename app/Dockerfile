@@ -1,31 +1,22 @@
 #stage 1
 #Start with a base image containing Java runtime
-FROM openjdk:17-slim as build
+FROM openjdk:17 as build
 
 # Add Maintainer Info
 LABEL maintainer="Aleksei Petrov <peta0982@gmail.com>"
 
-# The application's jar file
-ARG JAR_FILE
+ADD app .
 
-# Add the application's jar to the container
-COPY ${JAR_FILE} app.jar
+# build app 
+RUN mvn -f pom.xml clean package
 
-#unpackage jar file
-RUN mkdir -p target/dependency && (cd target/dependency; jar -xf /app.jar)
+RUN ls && ls target
 
 #stage 2
 #Same Java runtime
 FROM openjdk:17-slim
 
-#Add volume pointing to /tmp
-VOLUME /tmp
-
-#Copy unpackaged application to new container
-ARG DEPENDENCY=/target/dependency
-COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
-COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
-COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+COPY --from=build app.jar app.jar
 
 #execute the application
 ENTRYPOINT ["java","-cp","app:app/lib/*","ru.wakeupneo.recruiting.RecruitingApplication"]
