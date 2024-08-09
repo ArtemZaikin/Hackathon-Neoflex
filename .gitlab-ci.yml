@@ -40,6 +40,8 @@ deploy:
   image: 
     name: alpine/helm:latest
     entrypoint: [""] 
+  before_script:
+    - export KUBECONFIG=$KUBECONFIG
   script: 
     - helm upgrade --install recruitment-wun-backend helm --set image.tag=$CI_COMMIT_SHORT_SHA -n cnrprod1722867596-team-74124
 
