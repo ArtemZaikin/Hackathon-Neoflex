@@ -2,6 +2,7 @@ package ru.wakeupneo.recruiting.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.wakeupneo.recruiting.configuration.CommonProps;
 import ru.wakeupneo.recruiting.dto.MeetingDto;
 import ru.wakeupneo.recruiting.dto.UserDto;
 import ru.wakeupneo.recruiting.mapper.MeetingMapper;
@@ -11,9 +12,10 @@ import ru.wakeupneo.recruiting.model.enums.MeetingStatus;
 import ru.wakeupneo.recruiting.model.enums.UserCategory;
 import ru.wakeupneo.recruiting.repository.MeetingRepository;
 import ru.wakeupneo.recruiting.service.MeetingService;
-import ru.wakeupneo.recruiting.util.exception.MeetingNotCompleteException;
-import ru.wakeupneo.recruiting.util.exception.MeetingNotFoundException;
+import ru.wakeupneo.recruiting.util.exception.MeetingException;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,12 +28,13 @@ public class MeetingServiceImpl implements MeetingService {
     private final MeetingRepository meetingRepository;
     private final MemberMeetingServiceImpl memberMeetingService;
     private final MailSenderServiceImpl mailSenderService;
+    private final CommonProps commonProps;
 
     @Override
     public MeetingDto getMeeting(Long meetingId) {
         var meetingOptional = meetingRepository.findById(meetingId);
         if (meetingOptional.isEmpty()) {
-            throw new MeetingNotFoundException(String.format("Встреча с ID:%s не найдена", meetingId));
+            throw new MeetingException(String.format("Встреча с ID:%s не найдена", meetingId));
         }
         return meetingMapper.toMeetingDto(meetingOptional.get());
     }
@@ -39,14 +42,17 @@ public class MeetingServiceImpl implements MeetingService {
     @Override
     public void createMeeting(MeetingDto meetingDto) {
         if (!checkParticipants(meetingDto)) {
-            throw new MeetingNotCompleteException("Встреча должна содежать все категории пользователей");
+            throw new MeetingException("Встреча должна содежать все категории пользователей");
+        }
+        if (meetingDto.getStartDateTime().plusMinutes(commonProps.getMinTimeBeforeCreateMeetingMin())
+                .isAfter(LocalDateTime.now(ZoneId.of("UTC")))) {
+            throw new MeetingException(String.format("Встреча должна быть запланирована не менее чем за %s минут до начала", commonProps.getMinTimeBeforeCreateMeetingMin()));
         }
         meetingDto.setMeetingStatus(MeetingStatus.APPROVAL);
-        var meeting = meetingMapper.toMeeting(meetingDto);
-        meetingRepository.save(meetingMapper.toMeeting(meetingDto));
+        var meeting = meetingRepository.save(meetingMapper.toMeeting(meetingDto));
         for (UserDto participant : meetingDto.getParticipants()) {
             //todo занять временной слот у юзера
-            var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meetingDto.getId());
+            var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meeting.getId());
             memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
             mailSenderService.sendInvitationMail(participant, meetingDto);
         }
@@ -61,10 +67,9 @@ public class MeetingServiceImpl implements MeetingService {
                     mailSenderService.sendChangeMeetingMail(participant, meetingDto);
                 }
             }
-            var meeting = meetingMapper.toMeeting(meetingDto);
-            meetingRepository.save(meeting);
+            var meeting = meetingRepository.save(meetingMapper.toMeeting(meetingDto));
             for (UserDto participant : meetingDto.getParticipants()) {
-                var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meetingDto.getId());
+                var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meeting.getId());
                 if (memberMeeting.getInvitationStatus() != null) {
                     //todo занять временной слот у юзера
                     memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);

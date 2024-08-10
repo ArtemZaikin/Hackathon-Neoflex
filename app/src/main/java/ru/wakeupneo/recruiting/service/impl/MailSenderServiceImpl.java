@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import ru.wakeupneo.recruiting.configuration.CommonProps;
 import ru.wakeupneo.recruiting.model.enums.MailSubject;
 import ru.wakeupneo.recruiting.dto.MeetingDto;
 import ru.wakeupneo.recruiting.dto.UserDto;
@@ -20,12 +21,11 @@ import java.time.format.DateTimeFormatter;
 @RequiredArgsConstructor
 public class MailSenderServiceImpl implements MailSenderService {
 
-    @Value("")
-    private String url;
     @Value("${spring.mail.username}")
     private String from;
     private final TemplateEngine templateEngine;
     private final JavaMailSender mailSender;
+    private final CommonProps commonProps;
 
     @Override
     public void sendInvitationMail(UserDto userDto, MeetingDto meetingDto) {
@@ -80,7 +80,7 @@ public class MailSenderServiceImpl implements MailSenderService {
         context.setVariable("refs", meetingDto.getRef());
         context.setVariable("meeting_id", meetingDto.getId());
         context.setVariable("user_id", userDto.getId());
-        context.setVariable("url", url);
+        context.setVariable("url", commonProps.getUrl());
         return context;
     }
 }

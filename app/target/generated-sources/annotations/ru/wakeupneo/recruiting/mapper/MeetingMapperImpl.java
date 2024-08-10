@@ -12,7 +12,7 @@ import ru.wakeupneo.recruiting.model.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-11T00:21:02+0300",
+    date = "2024-08-11T01:32:24+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 18.0.2 (Oracle Corporation)"
 )
 @Component

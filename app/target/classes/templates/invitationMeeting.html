@@ -31,10 +31,10 @@
     В случае внесения изменений в детали встречи или ее отмене мы Вас уведомим.
 </p>
 <p>
-    <a th:href="@{http://{url}//{meeting_id}/members/{user_id}?agreement=true(url = ${url}, meeting_id = ${meeting_id}, user_id = ${user_id})}">Принять приглашение</a>.
+    <a th:href="@{http://{url}/{meeting_id}/members/{user_id}?agreement=true(url = ${url}, meeting_id = ${meeting_id}, user_id = ${user_id})}">Принять приглашение</a>.
 </p>
 <p>
-    <a th:href="@{http://{url}//{meeting_id}/members/{user_id}?agreement=false(url = ${url}, meeting_id = ${meeting_id}, user_id = ${user_id})}">Отказаться от приглашения</a>.
+    <a th:href="@{http://{url}/{meeting_id}/members/{user_id}?agreement=false(url = ${url}, meeting_id = ${meeting_id}, user_id = ${user_id})}">Отказаться от приглашения</a>.
 </p>
 </body>
 </html>

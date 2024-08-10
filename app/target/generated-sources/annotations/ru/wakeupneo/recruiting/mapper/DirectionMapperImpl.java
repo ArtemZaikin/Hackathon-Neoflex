@@ -7,7 +7,7 @@ import ru.wakeupneo.recruiting.model.Direction;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-11T00:21:01+0300",
+    date = "2024-08-11T01:32:24+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 18.0.2 (Oracle Corporation)"
 )
 @Component
@@ -21,6 +21,7 @@ public class DirectionMapperImpl implements DirectionMapper {
 
         Direction.DirectionBuilder direction = Direction.builder();
 
+        direction.id( directionDto.getId() );
         direction.name( directionDto.getName() );
 
         return direction.build();
@@ -34,6 +35,7 @@ public class DirectionMapperImpl implements DirectionMapper {
 
         DirectionDto directionDto = new DirectionDto();
 
+        directionDto.setId( direction.getId() );
         directionDto.setName( direction.getName() );
 
         return directionDto;

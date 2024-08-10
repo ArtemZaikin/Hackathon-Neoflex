@@ -13,13 +13,6 @@ import ru.wakeupneo.recruiting.util.exception.*;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<InvalidRequestDataDto> handleMeetingException(MeetingNotFoundException exception) {
-        log.warn(exception.getMessage());
-        var data = new InvalidRequestDataDto(exception.getMessage());
-        return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler
     public ResponseEntity<InvalidRequestDataDto> handleUserException(UserNotFoundException exception) {
         log.warn(exception.getMessage());
         var data = new InvalidRequestDataDto(exception.getMessage());
@@ -34,7 +27,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<InvalidRequestDataDto> handleMeetingNotCompleteException(MeetingNotCompleteException exception) {
+    public ResponseEntity<InvalidRequestDataDto> handleMeetingNotCompleteException(MeetingException exception) {
         log.warn(exception.getMessage());
         var data = new InvalidRequestDataDto(exception.getMessage());
         return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);
