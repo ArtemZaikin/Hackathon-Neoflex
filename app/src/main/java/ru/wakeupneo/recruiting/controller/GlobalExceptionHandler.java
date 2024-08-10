@@ -6,10 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.wakeupneo.recruiting.dto.InvalidRequestDataDto;
-import ru.wakeupneo.recruiting.util.exception.MeetingNotCompleteException;
-import ru.wakeupneo.recruiting.util.exception.MeetingNotFoundException;
-import ru.wakeupneo.recruiting.util.exception.MemberMeetingException;
-import ru.wakeupneo.recruiting.util.exception.UserNotFoundException;
+import ru.wakeupneo.recruiting.util.exception.*;
 
 @ControllerAdvice
 @Slf4j
@@ -38,6 +35,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<InvalidRequestDataDto> handleMeetingNotCompleteException(MeetingNotCompleteException exception) {
+        log.warn(exception.getMessage());
+        var data = new InvalidRequestDataDto(exception.getMessage());
+        return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<InvalidRequestDataDto> handleMailSenderException(MailSenderException exception) {
         log.warn(exception.getMessage());
         var data = new InvalidRequestDataDto(exception.getMessage());
         return new ResponseEntity<>(data, HttpStatus.BAD_REQUEST);

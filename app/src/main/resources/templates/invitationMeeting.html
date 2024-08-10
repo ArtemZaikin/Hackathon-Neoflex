@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Meeting invitation</title>
+</head>
+<body>
+<p>Уважаемый(ая) [[${surname}]] [[${name}]]!</p>
+<p>
+    Вы приглашены на встречу по направлению [[${direction}]]
+</p>
+<p>
+    <b>Описание встречи:</b>
+    [[${description}]]
+</p>
+<p>
+    <b>Дата:</b>
+    [[${date}]] [[${time}]]
+</p>
+<p>
+    <b>Продолжительность:</b>
+    [[${duration}]] минут
+</p>
+<p>
+    <b>Вложения:</b>
+    [[${refs}]]
+</p>
+<p>
+    Пожалуйста, подтвердите своё участие в сервисе синхронизации встреч название.
+    Если Вы или остальные участники не подтвердите участие во встрече за час до ее начала, она будет автоматически отменена.
+    В случае внесения изменений в детали встречи или ее отмене мы Вас уведомим.
+</p>
+<p>
+    <a th:href="@{http://{url}//{meeting_id}/members/{user_id}?agreement=true(url = ${url}, meeting_id = ${meeting_id}, user_id = ${user_id})}">Принять приглашение</a>.
+</p>
+<p>
+    <a th:href="@{http://{url}//{meeting_id}/members/{user_id}?agreement=false(url = ${url}, meeting_id = ${meeting_id}, user_id = ${user_id})}">Отказаться от приглашения</a>.
+</p>
+</body>
+</html>

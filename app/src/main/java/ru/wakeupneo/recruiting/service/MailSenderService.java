@@ -4,5 +4,11 @@ import ru.wakeupneo.recruiting.dto.MeetingDto;
 import ru.wakeupneo.recruiting.dto.UserDto;
 
 public interface MailSenderService {
-    void sendMail(UserDto userDto, MeetingDto meetingDto);
+
+    void sendInvitationMail(UserDto userDto, MeetingDto meetingDto);
+
+    void sendChangeMeetingMail(UserDto userDto, MeetingDto meetingDto);
+
+    void senCancelMeetingMail(UserDto userDto, MeetingDto meetingDto);
+
 }

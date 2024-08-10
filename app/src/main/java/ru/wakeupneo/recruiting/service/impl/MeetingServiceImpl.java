@@ -48,7 +48,7 @@ public class MeetingServiceImpl implements MeetingService {
             //todo занять временной слот у юзера
             var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meetingDto.getId());
             memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
-            mailSenderService.sendMail(participant, meetingDto);
+            mailSenderService.sendInvitationMail(participant, meetingDto);
         }
     }
 
@@ -57,7 +57,9 @@ public class MeetingServiceImpl implements MeetingService {
         if (checkParticipants(meetingDto)) {
             var oldMeeting = getMeeting(meetingId);
             if (!oldMeeting.getStartTime().equals(meetingDto.getStartTime())) {
-                //todo сделать рассылку об изменении времени встречи
+                for (UserDto participant : meetingDto.getParticipants()) {
+                    mailSenderService.sendChangeMeetingMail(participant, meetingDto);
+                }
             }
             var meeting = meetingMapper.toMeeting(meetingDto);
             meetingRepository.save(meeting);
@@ -66,7 +68,7 @@ public class MeetingServiceImpl implements MeetingService {
                 if (memberMeeting.getInvitationStatus() != null) {
                     //todo занять временной слот у юзера
                     memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
-                    mailSenderService.sendMail(participant, meetingDto);
+                    mailSenderService.sendInvitationMail(participant, meetingDto);
                 }
             }
         } else {
@@ -79,7 +81,7 @@ public class MeetingServiceImpl implements MeetingService {
         var meeting = getMeeting(meetingId);
         for (UserDto participant : meeting.getParticipants()) {
             //todo освободить временные слоты
-            //todo рассылка об отмене встречи
+            mailSenderService.senCancelMeetingMail(participant, meeting);
         }
         meetingRepository.deleteById(meetingId);
     }
@@ -120,7 +122,7 @@ public class MeetingServiceImpl implements MeetingService {
         meeting.setMeetingStatus(MeetingStatus.CANCELED);
         for (UserDto participant : meeting.getParticipants()) {
             //todo освободить временные слоты
-            //todo разослать письма об отмене встречи
+            mailSenderService.senCancelMeetingMail(participant, meeting);
         }
     }
 
