@@ -79,6 +79,7 @@ public class MeetingServiceImpl implements MeetingService {
         var meeting = getMeeting(meetingId);
         for (UserDto participant : meeting.getParticipants()) {
             //todo освободить временные слоты
+            //todo рассылка об отмене встречи
         }
         meetingRepository.deleteById(meetingId);
     }
@@ -112,9 +113,6 @@ public class MeetingServiceImpl implements MeetingService {
                     memberMeetingService.findByUserIdAndMeetingId(memberId, meetingId));
             cancelMeeting(meetingId);
         }
-        InvitationStatus status = agreement ? InvitationStatus.CONFIRMATION : InvitationStatus.REFUSING;
-        var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(memberId, meetingId);
-        memberMeetingService.updateStatus(status, memberMeeting);
     }
 
     private void cancelMeeting(Long meetingId) {
