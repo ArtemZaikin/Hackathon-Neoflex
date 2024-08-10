@@ -5,13 +5,16 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.wakeupneo.recruiting.dto.UserDto;
+import ru.wakeupneo.recruiting.dto.UserFreeTimeDto;
 import ru.wakeupneo.recruiting.model.TimeSlot;
 import ru.wakeupneo.recruiting.model.User;
 import ru.wakeupneo.recruiting.model.UserFreeTime;
+import ru.wakeupneo.recruiting.repository.UserFreeTimeRepository;
 import ru.wakeupneo.recruiting.repository.UserRepository;
 import ru.wakeupneo.recruiting.service.UserService;
 import ru.wakeupneo.recruiting.util.exception.UserNotFoundException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final UserFreeTimeRepository userFreeTimeRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -51,4 +55,19 @@ public class UserServiceImpl implements UserService {
         return getUserById(id).getFreeTimeSlotList();
     }
 
+    @Override
+    @Transactional
+    public void saveUserFreeTime(Long userId, UserFreeTimeDto userFreeTimeDto) {
+        //todo валидировать слот времени
+        User userById = getUserById(userId);
+        UserFreeTime userFreeTime = modelMapper.map(userFreeTimeDto, UserFreeTime.class);
+        userFreeTime.setUser(userById);
+        UserFreeTime savedUserFreeTime = userFreeTimeRepository.save(userFreeTime);
+        List<UserFreeTime> freeTimeSlotList = userById.getFreeTimeSlotList();
+        if (freeTimeSlotList == null) {
+            freeTimeSlotList = new ArrayList<>();
+        }
+        freeTimeSlotList.add(savedUserFreeTime);
+        userRepository.save(userById);
+    }
 }

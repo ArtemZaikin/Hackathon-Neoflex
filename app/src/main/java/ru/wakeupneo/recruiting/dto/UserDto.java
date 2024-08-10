@@ -14,8 +14,7 @@ import java.util.List;
  */
 @Value
 public class UserDto {
-    @NotEmpty(message = "name not might be empty")
-    @Schema(example = "1")
+    @Schema(example = "101")
     Long id;
 
     @NotEmpty(message = "name not might be empty")
@@ -37,7 +36,7 @@ public class UserDto {
     String timeZone;
 
     UserCategory category;
-
+    //TODO Заменить TimeSlot на UserFreeTimeDto
     List<List<TimeSlot>> freeTimeList;
 
 
