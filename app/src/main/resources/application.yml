@@ -25,6 +25,7 @@ spring:
     change-log: classpath:/db/changelog/changelog.xml
 server:
   port: 8080
+  shutdown: graceful
 springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
@@ -34,9 +35,9 @@ springdoc:
     path: /api-docs
 recruiting:
 #  встреча отменится если она не подтверждена и осталось меньше времени чем timeBeforeCancelMeetingMin
-  timeBeforeCancelMeetingMin = 60;
+  timeBeforeCancelMeetingMin: 60
 #  minTimeBeforeCreateMeetingMin - минимальное время до создания встречи
-  minTimeBeforeCreateMeetingMin = 60;
+  minTimeBeforeCreateMeetingMin: 60
 ---
 spring:
   config:
@@ -60,9 +61,9 @@ spring:
     password: recruiting
 recruiting:
   #  встреча отменится если она не подтверждена и осталось меньше времени чем timeBeforeCancelMeetingMin
-  timeBeforeCancelMeetingMin = 60;
+  timeBeforeCancelMeetingMin: 60
   #  minTimeBeforeCreateMeetingMin - минимальное время до создания встречи
-  minTimeBeforeCreateMeetingMin = 60;
+  minTimeBeforeCreateMeetingMin: 60
 ---
 spring:
   config:
@@ -86,6 +87,6 @@ spring:
     password: iequ6lug2bohXeocu5fao5aeghi6pohZ
 recruiting:
   #  встреча отменится если она не подтверждена и осталось меньше времени чем timeBeforeCancelMeetingMin
-  timeBeforeCancelMeetingMin = 60;
+  timeBeforeCancelMeetingMin: 60
   #  minTimeBeforeCreateMeetingMin - минимальное время до создания встречи
-  minTimeBeforeCreateMeetingMin = 60;
+  minTimeBeforeCreateMeetingMin: 60
