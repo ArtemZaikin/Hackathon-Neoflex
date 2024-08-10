@@ -35,4 +35,6 @@ public class UserDto {
     String timeZone;
 
     List<List<TimeSlot>> freeTimeList;
+
+
 }

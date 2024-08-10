@@ -1,4 +1,4 @@
-package ru.wakeupneo.recruiting.util.exception;
+package ru.wakeupneo.recruiting.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.wakeupneo.recruiting.dto.InvalidRequestDataDto;
+import ru.wakeupneo.recruiting.util.exception.MeetingNotFoundException;
+import ru.wakeupneo.recruiting.util.exception.UserNotFoundException;
 
 @ControllerAdvice
 @Slf4j

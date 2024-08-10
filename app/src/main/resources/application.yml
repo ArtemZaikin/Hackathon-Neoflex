@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: "develop"
+    active: "test"
 ---
 spring:
   config:
@@ -39,8 +39,8 @@ spring:
     name: recruiting
   jpa:
     hibernate:
-      ddl-auto: validate
-    #      ddl-auto: create
+#      ddl-auto: validate
+          ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL9Dialect
@@ -60,8 +60,8 @@ spring:
     name: recruiting
   jpa:
     hibernate:
-#      ddl-auto: validate
-          ddl-auto: create
+      ddl-auto: validate
+#          ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL9Dialect
