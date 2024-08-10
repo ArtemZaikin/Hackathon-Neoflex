@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/users", produces = {"application/json"})
 @RequiredArgsConstructor
-public class UserConstroller {
+public class UserController {
     private final UserService userService;
 
     //TODO возвращать DTO
