@@ -13,6 +13,9 @@ import java.util.List;
  */
 @Value
 public class UserDto {
+
+    Long id;
+
     @NotEmpty(message = "name not might be empty")
     @Schema(example = "Ivan")
     String name;

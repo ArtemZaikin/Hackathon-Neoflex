@@ -32,6 +32,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserCategory category;
 
+    @ManyToMany
+    @JoinTable(
+            name = "members_meetings",
+            joinColumns = { @JoinColumn(name = "id_person") },
+            inverseJoinColumns = { @JoinColumn(name = "id_meeting") }
+    )
+    List<Meeting> meetings;
+
 //    @ManyToMany
 //    @JoinTable(
 //            name = "user_direction",
