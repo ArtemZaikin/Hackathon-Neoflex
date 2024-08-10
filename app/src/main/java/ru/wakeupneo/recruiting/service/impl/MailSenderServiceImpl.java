@@ -6,7 +6,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import ru.wakeupneo.recruiting.configuration.CommonProps;
-import ru.wakeupneo.recruiting.model.enums.MailSubject;
 import ru.wakeupneo.recruiting.dto.MeetingDto;
 import ru.wakeupneo.recruiting.dto.UserDto;
 import org.thymeleaf.TemplateEngine;
@@ -32,7 +31,7 @@ public class MailSenderServiceImpl implements MailSenderService {
         var context = prepareContext(userDto, meetingDto);
         var html = templateEngine.process("invitationMeeting", context);
         sendMail(userDto.getEmail(),
-                MailSubject.INVITATION.toString(),
+                String.format("Приглашение на встречу: %s", meetingDto.getName()),
                 html);
     }
 
@@ -41,7 +40,7 @@ public class MailSenderServiceImpl implements MailSenderService {
         var context = prepareContext(userDto, meetingDto);
         var html = templateEngine.process("changedMeeting", context);
         sendMail(userDto.getEmail(),
-                MailSubject.CHANGE_MEETING.toString(),
+                String.format("Изменение деталей встречи: %s", meetingDto.getName()),
                 html);
     }
 
@@ -50,7 +49,7 @@ public class MailSenderServiceImpl implements MailSenderService {
         var context = prepareContext(userDto, meetingDto);
         var html = templateEngine.process("canceledMeeting", context);
         sendMail(userDto.getEmail(),
-                MailSubject.CANCEL_MEETING.toString(),
+                String.format("Отмена встречи: %s", meetingDto.getName()),
                 html);
     }
 

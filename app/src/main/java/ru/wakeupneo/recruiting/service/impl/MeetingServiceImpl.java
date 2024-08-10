@@ -45,13 +45,14 @@ public class MeetingServiceImpl implements MeetingService {
             throw new MeetingException("Встреча должна содежать все категории пользователей");
         }
         if (meetingDto.getStartDateTime().plusMinutes(commonProps.getMinTimeBeforeCreateMeetingMin())
-                .isAfter(LocalDateTime.now(ZoneId.of("UTC")))) {
+                .isBefore(LocalDateTime.now(ZoneId.of("UTC")))) {
             throw new MeetingException(String.format("Встреча должна быть запланирована не менее чем за %s минут до начала", commonProps.getMinTimeBeforeCreateMeetingMin()));
         }
         meetingDto.setMeetingStatus(MeetingStatus.APPROVAL);
         var meeting = meetingRepository.save(meetingMapper.toMeeting(meetingDto));
         for (UserDto participant : meetingDto.getParticipants()) {
             //todo занять временной слот у юзера
+            meetingDto.setId(meeting.getId());
             var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meeting.getId());
             memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
             mailSenderService.sendInvitationMail(participant, meetingDto);
@@ -61,6 +62,10 @@ public class MeetingServiceImpl implements MeetingService {
     @Override
     public void updateMeeting(MeetingDto meetingDto, Long meetingId) {
         if (checkParticipants(meetingDto)) {
+            if (meetingDto.getStartDateTime().plusMinutes(commonProps.getMinTimeBeforeCreateMeetingMin())
+                    .isBefore(LocalDateTime.now(ZoneId.of("UTC")))) {
+                throw new MeetingException(String.format("Встреча должна быть запланирована не менее чем за %s минут до начала", commonProps.getMinTimeBeforeCreateMeetingMin()));
+            }
             var oldMeeting = getMeeting(meetingId);
             if (!oldMeeting.getStartDateTime().equals(meetingDto.getStartDateTime())) {
                 for (UserDto participant : meetingDto.getParticipants()) {
