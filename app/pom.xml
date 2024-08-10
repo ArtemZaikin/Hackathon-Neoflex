@@ -19,6 +19,7 @@
 		<springdoc-openapi.version>1.6.15</springdoc-openapi.version>
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
 		<docker.image.prefix>recruiting</docker.image.prefix>
+		<modelmapper.version>3.2.0</modelmapper.version>
 	</properties>
 	<dependencies>
        <dependency>
@@ -52,6 +53,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${modelmapper.version}</version>
 		</dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->

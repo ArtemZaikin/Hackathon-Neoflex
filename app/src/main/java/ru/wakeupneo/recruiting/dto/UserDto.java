@@ -13,7 +13,8 @@ import java.util.List;
  */
 @Value
 public class UserDto {
-
+    @NotEmpty(message = "name not might be empty")
+    @Schema(example = "1")
     Long id;
 
     @NotEmpty(message = "name not might be empty")

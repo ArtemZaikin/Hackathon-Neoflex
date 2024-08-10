@@ -1,5 +1,6 @@
 package ru.wakeupneo.recruiting.service;
 
+import ru.wakeupneo.recruiting.dto.UserDto;
 import ru.wakeupneo.recruiting.model.TimeSlot;
 import ru.wakeupneo.recruiting.model.User;
 import ru.wakeupneo.recruiting.model.UserFreeTime;
@@ -11,4 +12,5 @@ public interface UserService {
     User getUserById(long id);
     List<User> getAvailableUsersOnTimeSlot(TimeSlot timeSlot);
     List<UserFreeTime> getUserFreeTime(long id);
+    User setTimezoneUser(UserDto userDto);
 }
