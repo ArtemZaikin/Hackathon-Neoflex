@@ -8,11 +8,14 @@ import ru.wakeupneo.recruiting.mapper.MeetingMapper;
 import ru.wakeupneo.recruiting.model.Meeting;
 import ru.wakeupneo.recruiting.model.enums.InvitationStatus;
 import ru.wakeupneo.recruiting.model.enums.MeetingStatus;
+import ru.wakeupneo.recruiting.model.enums.UserCategory;
 import ru.wakeupneo.recruiting.repository.MeetingRepository;
 import ru.wakeupneo.recruiting.service.MeetingService;
+import ru.wakeupneo.recruiting.util.exception.MeetingNotCompleteException;
 import ru.wakeupneo.recruiting.util.exception.MeetingNotFoundException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -35,6 +38,9 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void createMeeting(MeetingDto meetingDto) {
+        if (!checkParticipants(meetingDto)) {
+            throw new MeetingNotCompleteException("Встреча должна содежать все категории пользователей");
+        }
         meetingDto.setMeetingStatus(MeetingStatus.APPROVAL);
         var meeting = meetingMapper.toMeeting(meetingDto);
         meetingRepository.save(meetingMapper.toMeeting(meetingDto));
@@ -48,15 +54,23 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void updateMeeting(MeetingDto meetingDto, Long meetingId) {
-        var meeting = meetingMapper.toMeeting(meetingDto);
-        meetingRepository.save(meeting);
-        for (UserDto participant : meetingDto.getParticipants()) {
-            var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meetingDto.getId());
-            if (memberMeeting.getInvitationStatus() != null) {
-                //todo занять временной слот у юзера
-                memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
-                mailSenderService.sendMail(participant, meetingDto);
+        if (checkParticipants(meetingDto)) {
+            var oldMeeting = getMeeting(meetingId);
+            if (!oldMeeting.getStartTime().equals(meetingDto.getStartTime())) {
+                //todo сделать рассылку об изменении времени встречи
             }
+            var meeting = meetingMapper.toMeeting(meetingDto);
+            meetingRepository.save(meeting);
+            for (UserDto participant : meetingDto.getParticipants()) {
+                var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meetingDto.getId());
+                if (memberMeeting.getInvitationStatus() != null) {
+                    //todo занять временной слот у юзера
+                    memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
+                    mailSenderService.sendMail(participant, meetingDto);
+                }
+            }
+        } else {
+            cancelMeeting(meetingId);
         }
     }
 
@@ -108,7 +122,15 @@ public class MeetingServiceImpl implements MeetingService {
         meeting.setMeetingStatus(MeetingStatus.CANCELED);
         for (UserDto participant : meeting.getParticipants()) {
             //todo освободить временные слоты
-            //todo разослать письма
+            //todo разослать письма об отмене встречи
         }
+    }
+
+    private boolean checkParticipants(MeetingDto meetingDto) {
+        var categories = new HashSet<UserCategory>();
+        for (UserDto participant : meetingDto.getParticipants()) {
+            categories.add(participant.getCategory());
+        }
+        return categories.size() == 3;
     }
 }

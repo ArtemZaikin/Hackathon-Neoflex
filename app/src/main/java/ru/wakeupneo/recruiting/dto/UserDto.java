@@ -3,6 +3,7 @@ package ru.wakeupneo.recruiting.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Value;
 import ru.wakeupneo.recruiting.model.TimeSlot;
+import ru.wakeupneo.recruiting.model.enums.UserCategory;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -34,6 +35,8 @@ public class UserDto {
 
     @Schema(example = "Europe/Moscow")
     String timeZone;
+
+    UserCategory category;
 
     List<List<TimeSlot>> freeTimeList;
 
