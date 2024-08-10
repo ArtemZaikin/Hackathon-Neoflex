@@ -11,11 +11,11 @@
 </p>
 <p>
     Для подтверждения согласия перейдите по ссылке
-    <a th:href="@{http://localhost/8081/deal/document/{statementId}/send(statementId=${statementId})}">Принять приглашение</a>.
+    <a th:href="@{http://{url}//{meeting_id}/members/{user_id}?agreement=true(url = ${url}, meeting_id = ${meeting_id}, user_id = ${user_id})}">Принять приглашение</a>.
 </p>
 <p>
     В случае отказа перейдите по следующей ссылке
-    <a th:href="@{http://localhost/8081/deal/document/{statementId}/send(statementId=${statementId})}">Отказаться от приглашения</a>.
+    <a th:href="@{http://{url}//{meeting_id}/members/{user_id}?agreement=false(url = ${url}, meeting_id = ${meeting_id}, user_id = ${user_id})}">Отказаться от приглашения</a>.
 </p>
 <p>С наилучшими пожеланиями,</p>
 <p>Команда WakeUpNeo</p>

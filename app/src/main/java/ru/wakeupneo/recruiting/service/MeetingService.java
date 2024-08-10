@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MeetingService {
 
-    MeetingDto getMeeting(long meetingId);
+    MeetingDto getMeeting(Long meetingId);
 
     void createMeeting(MeetingDto meetingDto);
 
@@ -16,4 +16,6 @@ public interface MeetingService {
     void deleteMeeting(Long meetingId);
 
     List<MeetingDto> getAllMeetings();
+
+    void updateInvitationStatus(Long meetingId, Long memberId, boolean agreement);
 }

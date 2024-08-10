@@ -1,4 +1,4 @@
-package ru.wakeupneo.recruiting.service;
+package ru.wakeupneo.recruiting.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,7 @@ import ru.wakeupneo.recruiting.model.Meeting;
 import ru.wakeupneo.recruiting.model.enums.InvitationStatus;
 import ru.wakeupneo.recruiting.model.enums.MeetingStatus;
 import ru.wakeupneo.recruiting.repository.MeetingRepository;
+import ru.wakeupneo.recruiting.service.MeetingService;
 import ru.wakeupneo.recruiting.util.exception.MeetingNotFoundException;
 
 import java.util.ArrayList;
@@ -20,11 +21,11 @@ public class MeetingServiceImpl implements MeetingService {
 
     private final MeetingMapper meetingMapper;
     private final MeetingRepository meetingRepository;
-    private final MemberMeetingService memberMeetingService;
-    private final MailSenderService mailSenderService;
+    private final MemberMeetingServiceImpl memberMeetingService;
+    private final MailSenderServiceImpl mailSenderService;
 
     @Override
-    public MeetingDto getMeeting(long meetingId) {
+    public MeetingDto getMeeting(Long meetingId) {
         var meetingOptional = meetingRepository.findById(meetingId);
         if (meetingOptional.isEmpty()) {
             throw new MeetingNotFoundException(String.format("Встреча с ID:%s не найдена", meetingId));
@@ -38,6 +39,7 @@ public class MeetingServiceImpl implements MeetingService {
         var meeting = meetingMapper.toMeeting(meetingDto);
         meetingRepository.save(meetingMapper.toMeeting(meetingDto));
         for (UserDto participant : meetingDto.getParticipants()) {
+            //todo занять временной слот у юзера
             var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meetingDto.getId());
             memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
             mailSenderService.sendMail(participant, meetingDto);
@@ -51,6 +53,7 @@ public class MeetingServiceImpl implements MeetingService {
         for (UserDto participant : meetingDto.getParticipants()) {
             var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meetingDto.getId());
             if (memberMeeting.getInvitationStatus() != null) {
+                //todo занять временной слот у юзера
                 memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
                 mailSenderService.sendMail(participant, meetingDto);
             }
@@ -59,6 +62,10 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void deleteMeeting(Long meetingId) {
+        var meeting = getMeeting(meetingId);
+        for (UserDto participant : meeting.getParticipants()) {
+            //todo освободить временные слоты
+        }
         meetingRepository.deleteById(meetingId);
     }
 
@@ -67,5 +74,41 @@ public class MeetingServiceImpl implements MeetingService {
         List<Meeting> meetings = new ArrayList<>();
         meetingRepository.findAll().forEach(meetings::add);
         return meetings.stream().map(meetingMapper::toMeetingDto).toList();
+    }
+
+    @Override
+    public void updateInvitationStatus(Long meetingId, Long memberId, boolean agreement) {
+        if (agreement) {
+            memberMeetingService.updateStatus(InvitationStatus.CONFIRMATION,
+                    memberMeetingService.findByUserIdAndMeetingId(memberId, meetingId));
+            var meeting = getMeeting(meetingId);
+            int count = 0;
+            for (UserDto participant : meeting.getParticipants()) {
+                if (memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meetingId).getInvitationStatus() == InvitationStatus.CONFIRMATION) {
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            if (count == meeting.getParticipants().size()) {
+                meeting.setMeetingStatus(MeetingStatus.PLANNED);
+            }
+        } else {
+            memberMeetingService.updateStatus(InvitationStatus.REFUSING,
+                    memberMeetingService.findByUserIdAndMeetingId(memberId, meetingId));
+            cancelMeeting(meetingId);
+        }
+        InvitationStatus status = agreement ? InvitationStatus.CONFIRMATION : InvitationStatus.REFUSING;
+        var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(memberId, meetingId);
+        memberMeetingService.updateStatus(status, memberMeeting);
+    }
+
+    private void cancelMeeting(Long meetingId) {
+        var meeting = getMeeting(meetingId);
+        meeting.setMeetingStatus(MeetingStatus.CANCELED);
+        for (UserDto participant : meeting.getParticipants()) {
+            //todo освободить временные слоты
+            //todo разослать письма
+        }
     }
 }

@@ -1,4 +1,4 @@
-package ru.wakeupneo.recruiting.service;
+package ru.wakeupneo.recruiting.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -9,6 +9,7 @@ import ru.wakeupneo.recruiting.model.TimeSlot;
 import ru.wakeupneo.recruiting.model.User;
 import ru.wakeupneo.recruiting.model.UserFreeTime;
 import ru.wakeupneo.recruiting.repository.UserRepository;
+import ru.wakeupneo.recruiting.service.UserService;
 import ru.wakeupneo.recruiting.util.exception.UserNotFoundException;
 
 import java.util.List;

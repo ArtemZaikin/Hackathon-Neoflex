@@ -82,4 +82,10 @@ public class MeetingController {
     public ResponseEntity<List<MeetingDto>> getAllMeetings() {
         return ResponseEntity.ok(meetingService.getAllMeetings());
     }
+
+    @PatchMapping("/{meeting_id}/members/{user_id}")
+    public void updateInvitationStatus(@PathVariable Long meeting_id,
+                                       @PathVariable Long user_id, @RequestParam boolean agreement) {
+        meetingService.updateInvitationStatus(meeting_id, user_id, agreement);
+    }
 }
