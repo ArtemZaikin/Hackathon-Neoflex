@@ -9,7 +9,7 @@
 
     <changeSet id="1723290148942-1" author="Aleksei Petrov">
         <insert tableName="person">
-            <column name="id" valueSequenceNext="hibernate_sequence"/>
+            <column name="id" valueNumeric="101"/>
             <column name="name" value="Ivan"/>
             <column name="surname" value="Pertov"/>
             <column name="email" value="ivan@gmail.com"/>
@@ -22,7 +22,7 @@
 
     <changeSet id="1723290148942-2" author="Aleksei Petrov">
         <insert tableName="person">
-            <column name="id" valueSequenceNext="hibernate_sequence"/>
+            <column name="id" valueNumeric="102"/>
             <column name="name" value="Olga"/>
             <column name="surname" value="Topoleva"/>
             <column name="email" value="olga@gmail.com"/>
@@ -35,7 +35,7 @@
 
     <changeSet id="1723290148942-3" author="Aleksei Petrov">
         <insert tableName="person">
-            <column name="id" valueSequenceNext="hibernate_sequence"/>
+            <column name="id" valueNumeric="103"/>
             <column name="name" value="Semen"/>
             <column name="surname" value="Popov"/>
             <column name="email" value="semen@gmail.com"/>
@@ -48,7 +48,7 @@
 
     <changeSet id="1723290148942-4" author="Aleksei Petrov">
         <insert tableName="person">
-            <column name="id" valueSequenceNext="hibernate_sequence"/>
+            <column name="id" valueNumeric="104"/>
             <column name="name" value="Fedor"/>
             <column name="surname" value="Tolstoy"/>
             <column name="email" value="fedot@gmail.com"/>
