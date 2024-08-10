@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.wakeupneo.recruiting.dto.MeetingDto;
 import ru.wakeupneo.recruiting.dto.UserDto;
 import ru.wakeupneo.recruiting.model.User;
 import ru.wakeupneo.recruiting.model.UserFreeTime;
@@ -20,6 +19,7 @@ import java.util.List;
 public class UserConstroller {
     private final UserService userService;
 
+    //TODO возвращать DTO
     @GetMapping()
     public ResponseEntity<List<User>> getUser() {
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
