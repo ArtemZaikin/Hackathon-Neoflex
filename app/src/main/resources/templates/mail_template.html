@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Meeting invitation</title>
+</head>
+<body>
+<h1>Здравствуйте, [[${surname}]] [[${name}]]!</h1>
+<p>
+    Приглашаем Вас пройти собеседование на позицию [[${direction}]] [[${date}]] в [[${time}]]
+</p>
+<p>
+    Для подтверждения согласия перейдите по ссылке
+    <a th:href="@{http://localhost/8081/deal/document/{statementId}/send(statementId=${statementId})}">Принять приглашение</a>.
+</p>
+<p>
+    В случае отказа перейдите по следующей ссылке
+    <a th:href="@{http://localhost/8081/deal/document/{statementId}/send(statementId=${statementId})}">Отказаться от приглашения</a>.
+</p>
+<p>С наилучшими пожеланиями,</p>
+<p>Команда WakeUpNeo</p>
+</body>
+</html>

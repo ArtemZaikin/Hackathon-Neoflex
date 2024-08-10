@@ -3,8 +3,11 @@ package ru.wakeupneo.recruiting.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.wakeupneo.recruiting.dto.MeetingDto;
+import ru.wakeupneo.recruiting.dto.UserDto;
 import ru.wakeupneo.recruiting.mapper.MeetingMapper;
 import ru.wakeupneo.recruiting.model.Meeting;
+import ru.wakeupneo.recruiting.model.enums.InvitationStatus;
+import ru.wakeupneo.recruiting.model.enums.MeetingStatus;
 import ru.wakeupneo.recruiting.repository.MeetingRepository;
 import ru.wakeupneo.recruiting.util.exception.MeetingNotFoundException;
 
@@ -17,6 +20,8 @@ public class MeetingServiceImpl implements MeetingService {
 
     private final MeetingMapper meetingMapper;
     private final MeetingRepository meetingRepository;
+    private final MemberMeetingService memberMeetingService;
+    private final MailSenderService mailSenderService;
 
     @Override
     public MeetingDto getMeeting(long meetingId) {
@@ -29,14 +34,27 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public void createMeeting(MeetingDto meetingDto) {
+        meetingDto.setMeetingStatus(MeetingStatus.APPROVAL);
+        var meeting = meetingMapper.toMeeting(meetingDto);
         meetingRepository.save(meetingMapper.toMeeting(meetingDto));
+        for (UserDto participant : meetingDto.getParticipants()) {
+            var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meetingDto.getId());
+            memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
+            mailSenderService.sendMail(participant, meetingDto);
+        }
     }
 
     @Override
     public void updateMeeting(MeetingDto meetingDto, Long meetingId) {
         var meeting = meetingMapper.toMeeting(meetingDto);
-        meeting.setId(meetingId);
         meetingRepository.save(meeting);
+        for (UserDto participant : meetingDto.getParticipants()) {
+            var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meetingDto.getId());
+            if (memberMeeting.getInvitationStatus() != null) {
+                memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
+                mailSenderService.sendMail(participant, meetingDto);
+            }
+        }
     }
 
     @Override

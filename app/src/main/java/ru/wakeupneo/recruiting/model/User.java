@@ -35,4 +35,12 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "direction_id")
     private Direction direction;
+    @ManyToMany
+    @JoinTable(
+            name = "members_meetings",
+            joinColumns = { @JoinColumn(name = "id_person") },
+            inverseJoinColumns = { @JoinColumn(name = "id_meeting") }
+    )
+    List<Meeting> meetings;
+
 }

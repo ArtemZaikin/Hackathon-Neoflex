@@ -14,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class MeetingDto {
 
+    Long id;
+
     @Schema(example = "Собеседование JavaDev")
     String name;
 
