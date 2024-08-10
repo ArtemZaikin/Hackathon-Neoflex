@@ -12,18 +12,20 @@ import ru.wakeupneo.recruiting.model.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-08-11T00:01:20+0300",
+    date = "2024-08-11T00:21:02+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 18.0.2 (Oracle Corporation)"
 )
 @Component
 public class MeetingMapperImpl implements MeetingMapper {
 
     private final UserMapper userMapper;
+    private final DirectionMapper directionMapper;
 
     @Autowired
-    public MeetingMapperImpl(UserMapper userMapper) {
+    public MeetingMapperImpl(UserMapper userMapper, DirectionMapper directionMapper) {
 
         this.userMapper = userMapper;
+        this.directionMapper = directionMapper;
     }
 
     @Override
@@ -34,10 +36,12 @@ public class MeetingMapperImpl implements MeetingMapper {
 
         Meeting meeting = new Meeting();
 
+        meeting.setDirection( directionMapper.toDirection( meetingDto.getDirectionDto() ) );
         meeting.setId( meetingDto.getId() );
         meeting.setName( meetingDto.getName() );
         meeting.setDescription( meetingDto.getDescription() );
         meeting.setMeetingStatus( meetingDto.getMeetingStatus() );
+        meeting.setStartDateTime( meetingDto.getStartDateTime() );
         meeting.setDurationMin( meetingDto.getDurationMin() );
         meeting.setRef( meetingDto.getRef() );
         meeting.setParticipants( userDtoListToUserList( meetingDto.getParticipants() ) );
@@ -53,10 +57,12 @@ public class MeetingMapperImpl implements MeetingMapper {
 
         MeetingDto meetingDto = new MeetingDto();
 
+        meetingDto.setDirectionDto( directionMapper.toDirectionDto( meeting.getDirection() ) );
         meetingDto.setId( meeting.getId() );
         meetingDto.setName( meeting.getName() );
         meetingDto.setDescription( meeting.getDescription() );
         meetingDto.setMeetingStatus( meeting.getMeetingStatus() );
+        meetingDto.setStartDateTime( meeting.getStartDateTime() );
         meetingDto.setDurationMin( meeting.getDurationMin() );
         meetingDto.setRef( meeting.getRef() );
         meetingDto.setParticipants( userListToUserDtoList( meeting.getParticipants() ) );

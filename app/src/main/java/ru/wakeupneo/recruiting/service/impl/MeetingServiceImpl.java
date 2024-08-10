@@ -56,7 +56,7 @@ public class MeetingServiceImpl implements MeetingService {
     public void updateMeeting(MeetingDto meetingDto, Long meetingId) {
         if (checkParticipants(meetingDto)) {
             var oldMeeting = getMeeting(meetingId);
-            if (!oldMeeting.getStartTime().equals(meetingDto.getStartTime())) {
+            if (!oldMeeting.getStartDateTime().equals(meetingDto.getStartDateTime())) {
                 for (UserDto participant : meetingDto.getParticipants()) {
                     mailSenderService.sendChangeMeetingMail(participant, meetingDto);
                 }

@@ -24,11 +24,11 @@ public class ScheduledServiceImpl implements ScheduledService {
     public void checkOverMeetings() {
         var meetings = meetingService.getAllMeetings();
         for (MeetingDto meeting : meetings) {
-            if (meeting.getStartTime().isAfter(LocalDateTime.now(ZoneId.of("UTC"))) && meeting.getMeetingStatus().equals(MeetingStatus.PLANNED)) {
+            if (meeting.getStartDateTime().isAfter(LocalDateTime.now(ZoneId.of("UTC"))) && meeting.getMeetingStatus().equals(MeetingStatus.PLANNED)) {
                 meeting.setMeetingStatus(MeetingStatus.OVER);
                 meetingService.updateMeeting(meeting, meeting.getId());
             }
-            if(meeting.getStartTime().isAfter(LocalDateTime.now(ZoneId.of("UTC")).minusMinutes(commonProps.getTimeBeforeCancelMeetingMin()))
+            if(meeting.getStartDateTime().isAfter(LocalDateTime.now(ZoneId.of("UTC")).minusMinutes(commonProps.getTimeBeforeCancelMeetingMin()))
                     && meeting.getMeetingStatus().equals(MeetingStatus.APPROVAL)) {
                 meeting.setMeetingStatus(MeetingStatus.CANCELED);
                 meetingService.updateMeeting(meeting, meeting.getId());

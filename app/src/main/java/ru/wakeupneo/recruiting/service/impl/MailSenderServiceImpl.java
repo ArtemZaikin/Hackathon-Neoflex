@@ -74,8 +74,8 @@ public class MailSenderServiceImpl implements MailSenderService {
         context.setVariable("surname", userDto.getSurname());
         context.setVariable("direction", meetingDto.getDirectionDto().getName());
         context.setVariable("description", meetingDto.getDescription());
-        context.setVariable("date", meetingDto.getStartTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-        context.setVariable("time", meetingDto.getStartTime().format(DateTimeFormatter.ofPattern("hh-mm")));
+        context.setVariable("date", meetingDto.getStartDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        context.setVariable("time", meetingDto.getStartDateTime().format(DateTimeFormatter.ofPattern("hh-mm")));
         context.setVariable("duration", meetingDto.getDurationMin());
         context.setVariable("refs", meetingDto.getRef());
         context.setVariable("meeting_id", meetingDto.getId());
