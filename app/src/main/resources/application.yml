@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: "test"
+    active: "production"
 ---
 spring:
   config:
@@ -86,6 +86,9 @@ spring:
       on-profile: "production"
   application:
     name: recruiting
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog.xml
   jpa:
     hibernate:
       ddl-auto: validate
