@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DirectionDto {
 
-    @Schema(example = "Backend разработка")
+    @Schema(example = "1")
+    Integer id;
+
+    @Schema(example = "Backend-разработка")
     String name;
 }

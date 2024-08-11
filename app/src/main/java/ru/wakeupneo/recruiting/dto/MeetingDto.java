@@ -26,7 +26,7 @@ public class MeetingDto {
     MeetingStatus meetingStatus;
 
     @Schema(format = "yyyy-mm-dd", example = "2024-01-01")
-    LocalDateTime startTime;
+    LocalDateTime startDateTime;
 
     @Schema(example = "30")
     int durationMin;

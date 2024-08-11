@@ -23,6 +23,21 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/changelog.xml
+  mail:
+    host: smtp.yandex.ru
+    port: 587
+    username: Bagy29@yandex.ru
+    password: zancdsmipaxezbcz
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
 server:
   port: 8080
   shutdown: graceful

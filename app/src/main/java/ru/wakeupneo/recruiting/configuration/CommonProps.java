@@ -15,5 +15,6 @@ public class CommonProps {
     /**
      * #  minTimeBeforeCreateMeetingMin - минимальное время до создания встречи
      */
-    private Integer minTimeBeforeCreateMeeting = 60;
+    private Integer minTimeBeforeCreateMeetingMin = 60;
+
 }
