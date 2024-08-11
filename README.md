@@ -2,7 +2,7 @@
 
 Сервис, функционал которого заключается в заведении и отображении встреч в календаре для проведения собеседований.
 
-#Информация по системному анализу
+# Информация по системному анализу
 
 Информация находится в каталоге [Каталог](https://git.codenrock.com/neo-hack-2024-1232/cnrprod1722867596-team-74124/razrabotka-rabochego-instrumenta-dlya-sinhronizacii-ekspertov-rekrutyorov-i-kandidatov-5883/-/tree/develop/reports?ref_type=heads)
 
