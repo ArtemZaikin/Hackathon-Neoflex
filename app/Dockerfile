@@ -5,7 +5,7 @@ FROM maven:3.8.3-openjdk-17 as build
 # Add Maintainer Info
 LABEL maintainer="Aleksei Petrov <peta0982@gmail.com>"
 
-ADD app .
+COPY . .
 
 # build app 
 RUN mvn -Dmaven.test.failure.ignore=true -f pom.xml clean package
