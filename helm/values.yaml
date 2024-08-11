@@ -55,10 +55,10 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls:
-   - secretName: nh2024-tls
-     hosts:
-       - recruitment.wun.nh2024.codenrock.com
+#tls:
+#  - secretName: nh2024-tls
+#     hosts:
+#      - recruitment.wun.nh2024.codenrock.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
