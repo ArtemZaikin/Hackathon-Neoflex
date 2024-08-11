@@ -2,6 +2,9 @@
 
 Сервис, функционал которого заключается в заведении и отображении встреч в календаре для проведения собеседований.
 
+#Информация по системному анализу
+Информация находится в каталоге [Каталог](https://git.codenrock.com/neo-hack-2024-1232/cnrprod1722867596-team-74124/razrabotka-rabochego-instrumenta-dlya-sinhronizacii-ekspertov-rekrutyorov-i-kandidatov-5883/-/tree/develop/reports?ref_type=heads)
+
 # Запуск приложения для тестирования
 ## Требования
 Установленный maven
@@ -19,6 +22,10 @@ linux: `cd ~/Downloads/<КаталогЗагрузки>/app`
 windows: `mvnw.cmd spring-boot:run`
 
 linux: `./mvnw spring-boot:run`
+
+# Результаты тестирования
+
+Отчет о результатах тестирования: [https://drive.google.com/drive/folders/1h23hYD5GqKMugviQxok6dyNNVbRjOIne?usp=sharing](https://drive.google.com/drive/folders/1h23hYD5GqKMugviQxok6dyNNVbRjOIne?usp=sharing)
 
 ## Подлючение
 - Swagger UI [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
