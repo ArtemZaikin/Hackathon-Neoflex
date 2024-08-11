@@ -9,5 +9,6 @@
         <include file="003-populate-table_direction.xml" relativeToChangelogFile="true"/>
         <include file="004-populate-table_user.xml" relativeToChangelogFile="true"/>
         <include file="005-populate-table_user_free_time.xml" relativeToChangelogFile="true"/>
+        <include file="006-populate-table_meeting.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

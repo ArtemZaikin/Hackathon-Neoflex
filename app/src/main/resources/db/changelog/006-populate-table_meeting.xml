@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd"
+        logicalFilePath="db/changelog/changelog.xml">
+
+
+    <changeSet id="1723318620394-1" author="Aleksei Petrov">
+        <insert tableName="meeting">
+            <column name="id_meeting" valueNumeric="201"/>
+            <column name="meeting_name" value="Собеседование"/>
+            <column name="description" value="Техническое собеседование"/>
+            <column name="status" value="APPROVAL"/>
+            <column name="start_time_date" valueDate="2024-08-13 12:00:00"/>
+            <column name="duration_min" valueNumeric="60"/>
+            <column name="direction_id" valueNumeric="1"/>
+            <column name="ref_files"
+                    value="https://drive.google.com/drive/folders/1bHfmxEenIER4e1XRcRU-Y2q7NWDRhry3?usp=sharing"/>
+        </insert>
+    </changeSet>
+    <changeSet id="1723319846942-1" author="Aleksei Petrov">
+        <insert tableName="members_meetings">
+            <column name="id_person" valueNumeric="101"/>
+            <column name="id_meeting" valueNumeric="201"/>
+            <column name="invitation_status" value="WAITING"/>
+        </insert>
+    </changeSet>
+    <changeSet id="1723319846942-2" author="Aleksei Petrov">
+        <insert tableName="members_meetings">
+            <column name="id_person" valueNumeric="102"/>
+            <column name="id_meeting" valueNumeric="201"/>
+            <column name="invitation_status" value="WAITING"/>
+
+        </insert>
+    </changeSet>
+    <changeSet id="1723319846942-3" author="Aleksei Petrov">
+        <insert tableName="members_meetings">
+            <column name="id_person" valueNumeric="103"/>
+            <column name="id_meeting" valueNumeric="201"/>
+            <column name="invitation_status" value="WAITING"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

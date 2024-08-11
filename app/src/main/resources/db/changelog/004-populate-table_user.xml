@@ -36,9 +36,9 @@
     <changeSet id="1723290148942-3" author="Aleksei Petrov">
         <insert tableName="person">
             <column name="id" valueNumeric="103"/>
-            <column name="name" value="Semen"/>
-            <column name="surname" value="Popov"/>
-            <column name="email" value="semen@gmail.com"/>
+            <column name="name" value="Aleksei"/>
+            <column name="surname" value="petrov"/>
+            <column name="email" value="aleksei@gmail.com"/>
             <column name="phone_number" value=" +7(495) 984 25 13"/>
             <column name="timezone" value="Europa/Moscow"/>
             <column name="category" value="CANDIDATE"/>
