@@ -18,8 +18,8 @@ FROM openjdk:17-slim
 # Создаем каталог для сертификатов
 RUN mkdir -p /app/certs
 
-# Копируем сертификат
-COPY ./app/certs/client.crt /app/certs/client.crt
+# Копируем сертификат из папки app в папку certs внутри контейнера
+COPY ./app/client.crt /app/certs/client.crt
 
 # Копируем собранный JAR файл
 COPY --from=build /app/target/recruiting-0.0.1-SNAPSHOT.jar /app/recruiting-0.0.1-SNAPSHOT.jar
@@ -31,6 +31,5 @@ ENV JAVA_OPTS="-Djavax.net.ssl.trustStore=/app/certs/client.crt -Djavax.net.ssl.
 EXPOSE 8080
 
 # Запускаем приложение
-ENTRYPOINT ["java", "-jar", "recruiting-0.0.1-SNAPSHOT.jar"]
-
+ENTRYPOINT ["java", "-jar", "/app/recruiting-0.0.1-SNAPSHOT.jar"]
 
