@@ -1,5 +1,6 @@
 package ru.wakeupneo.recruiting.mapper;
 
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import ru.wakeupneo.recruiting.dto.UserDto;

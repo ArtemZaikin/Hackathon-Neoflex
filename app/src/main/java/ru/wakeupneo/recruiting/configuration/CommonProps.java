@@ -17,5 +17,4 @@ public class CommonProps {
      */
     private Integer minTimeBeforeCreateMeetingMin = 60;
 
-    private String url = "localhost:8080";
 }

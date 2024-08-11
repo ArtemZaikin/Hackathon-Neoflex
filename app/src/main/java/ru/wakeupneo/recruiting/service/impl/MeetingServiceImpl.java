@@ -51,7 +51,6 @@ public class MeetingServiceImpl implements MeetingService {
         meetingDto.setMeetingStatus(MeetingStatus.APPROVAL);
         var meeting = meetingRepository.save(meetingMapper.toMeeting(meetingDto));
         for (UserDto participant : meetingDto.getParticipants()) {
-            //todo занять временной слот у юзера
             meetingDto.setId(meeting.getId());
             var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meeting.getId());
             memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
@@ -76,7 +75,6 @@ public class MeetingServiceImpl implements MeetingService {
             for (UserDto participant : meetingDto.getParticipants()) {
                 var memberMeeting = memberMeetingService.findByUserIdAndMeetingId(participant.getId(), meeting.getId());
                 if (memberMeeting.getInvitationStatus() != null) {
-                    //todo занять временной слот у юзера
                     memberMeetingService.updateStatus(InvitationStatus.WAITING, memberMeeting);
                     mailSenderService.sendInvitationMail(participant, meetingDto);
                 }
@@ -90,7 +88,6 @@ public class MeetingServiceImpl implements MeetingService {
     public void deleteMeeting(Long meetingId) {
         var meeting = getMeeting(meetingId);
         for (UserDto participant : meeting.getParticipants()) {
-            //todo освободить временные слоты
             mailSenderService.senCancelMeetingMail(participant, meeting);
         }
         meetingRepository.deleteById(meetingId);

@@ -79,7 +79,6 @@ public class MailSenderServiceImpl implements MailSenderService {
         context.setVariable("refs", meetingDto.getRef());
         context.setVariable("meeting_id", meetingDto.getId());
         context.setVariable("user_id", userDto.getId());
-        context.setVariable("url", commonProps.getUrl());
         return context;
     }
 }
