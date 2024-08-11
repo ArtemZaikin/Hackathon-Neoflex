@@ -15,4 +15,5 @@ public interface UserService {
     List<UserFreeTime> getUserFreeTime(long id);
     User setTimezoneUser(UserDto userDto);
     void saveUserFreeTime(Long userId, UserFreeTimeDto userFreeTimeDto);
+    List<UserFreeTime> getUserFreeTimeWithoutMeeting(long id);
 }

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @ToString
 @Entity
 public class UserFreeTime{
+    //todo переделать на TimeSlot
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

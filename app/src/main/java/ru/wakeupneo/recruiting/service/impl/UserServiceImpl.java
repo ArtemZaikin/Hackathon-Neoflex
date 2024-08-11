@@ -12,6 +12,7 @@ import ru.wakeupneo.recruiting.model.UserFreeTime;
 import ru.wakeupneo.recruiting.repository.UserFreeTimeRepository;
 import ru.wakeupneo.recruiting.repository.UserRepository;
 import ru.wakeupneo.recruiting.service.UserService;
+import ru.wakeupneo.recruiting.util.PeriodUtils;
 import ru.wakeupneo.recruiting.util.exception.UserNotFoundException;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserFreeTimeRepository userFreeTimeRepository;
     private final ModelMapper modelMapper;
+    private final PeriodUtils periodUtils;
 
     @Override
     public List<User> getAllUsers() {
@@ -53,6 +55,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserFreeTime> getUserFreeTime(long id) {
         return getUserById(id).getFreeTimeSlotList();
+    }
+
+    @Override
+    public List<UserFreeTime> getUserFreeTimeWithoutMeeting(long id) {
+        return periodUtils.getTimePeriodWithoutMeeting(getUserById(id));
     }
 
     @Override

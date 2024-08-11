@@ -53,6 +53,12 @@ recruiting:
   timeBeforeCancelMeetingMin: 60
 #  minTimeBeforeCreateMeetingMin - минимальное время до создания встречи
   minTimeBeforeCreateMeetingMin: 60
+management:
+  endpoints:
+    web:
+      exposure:
+        include: env
+
 ---
 spring:
   config:
@@ -74,11 +80,17 @@ spring:
     url: jdbc:postgresql://localhost:5432/recruiting
     username: recruiting
     password: recruiting
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog.xml
 recruiting:
   #  встреча отменится если она не подтверждена и осталось меньше времени чем timeBeforeCancelMeetingMin
   timeBeforeCancelMeetingMin: 60
   #  minTimeBeforeCreateMeetingMin - минимальное время до создания встречи
   minTimeBeforeCreateMeetingMin: 60
+server:
+  port: 8080
+  shutdown: graceful
 ---
 spring:
   config:
@@ -115,3 +127,6 @@ recruiting:
   timeBeforeCancelMeetingMin: 60
   #  minTimeBeforeCreateMeetingMin - минимальное время до создания встречи
   minTimeBeforeCreateMeetingMin: 60
+server:
+  port: 8080
+  shutdown: graceful

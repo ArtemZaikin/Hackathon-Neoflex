@@ -32,6 +32,11 @@ public class UserController {
         return new ResponseEntity<>(userService.getUserFreeTime(user_id), HttpStatus.OK);
     }
 
+    @GetMapping("/{user_id}/free-time-without_meetings")
+    public ResponseEntity<List<UserFreeTime>> getUserFreeTimeWithoutMeeting(@PathVariable Long user_id) {
+        return new ResponseEntity<>(userService.getUserFreeTimeWithoutMeeting(user_id), HttpStatus.OK);
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<User> patchUser(@PathVariable Long id, @RequestBody UserDto userDto) {
         return new ResponseEntity<>(userService.setTimezoneUser(userDto), HttpStatus.OK);
