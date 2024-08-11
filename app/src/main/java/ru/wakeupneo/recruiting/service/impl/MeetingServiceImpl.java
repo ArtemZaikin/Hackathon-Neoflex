@@ -3,6 +3,7 @@ package ru.wakeupneo.recruiting.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.wakeupneo.recruiting.configuration.CommonProps;
+import org.springframework.transaction.annotation.Transactional;
 import ru.wakeupneo.recruiting.dto.MeetingDto;
 import ru.wakeupneo.recruiting.dto.UserDto;
 import ru.wakeupneo.recruiting.mapper.MeetingMapper;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MeetingServiceImpl implements MeetingService {
 
     private final MeetingMapper meetingMapper;
@@ -40,6 +42,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
+    @Transactional
     public void createMeeting(MeetingDto meetingDto) {
         if (!checkParticipants(meetingDto)) {
             throw new MeetingException("Встреча должна содежать все категории пользователей");
@@ -59,6 +62,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
+    @Transactional
     public void updateMeeting(MeetingDto meetingDto, Long meetingId) {
         if (checkParticipants(meetingDto)) {
             if (meetingDto.getStartDateTime().plusMinutes(commonProps.getMinTimeBeforeCreateMeetingMin())
@@ -85,6 +89,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
+    @Transactional
     public void deleteMeeting(Long meetingId) {
         var meeting = getMeeting(meetingId);
         for (UserDto participant : meeting.getParticipants()) {
@@ -101,6 +106,7 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
+    @Transactional
     public void updateInvitationStatus(Long meetingId, Long memberId, boolean agreement) {
         if (agreement) {
             memberMeetingService.updateStatus(InvitationStatus.CONFIRMATION,
