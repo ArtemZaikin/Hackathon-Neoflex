@@ -5,7 +5,7 @@
 # Информация от аналитиков
 
 - [Брифинг с заказчиком](https://drive.google.com/file/d/1W8DdunaPcFoyddwThkOCOoPeKd00REsO/view?usp=sharing)
-- [Техническое задание](https://git.codenrock.com/neo-hack-2024-1232/cnrprod1722867596-team-74124/razrabotka-rabochego-instrumenta-dlya-sinhronizacii-ekspertov-rekrutyorov-i-kandidatov-5883/-/tree/develop/reports?ref_type=heads)
+- [Техническое задание](https://drive.google.com/file/d/1wO06ohpCW98RW6wI5abmIcsQMKbk3Xas/view?usp=sharing)
 
 # Запуск приложения для тестирования
 ## Требования
