@@ -24,10 +24,6 @@ windows: `mvnw.cmd spring-boot:run`
 
 linux: `./mvnw spring-boot:run`
 
-# Результаты тестирования
-
-Отчет о результатах тестирования: [https://drive.google.com/drive/folders/1h23hYD5GqKMugviQxok6dyNNVbRjOIne?usp=sharing](https://drive.google.com/drive/folders/1h23hYD5GqKMugviQxok6dyNNVbRjOIne?usp=sharing)
-
 ## Подлючение
 - Swagger UI [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 - Консоль БД (h2) [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
@@ -37,7 +33,6 @@ linux: `./mvnw spring-boot:run`
     
 postgresql/operations/connect#get-ssl-cert).
 
-### Дополнительная информация
-в неймспейсе имеются следующие секреты:
-- regcred - секрет для пуллинга имиджей из репозитория Gitlab вашего проекта
-- nh2024-tls - секрет с wildcard сертификатом для https для домена *.nh2024.codenrock.com. Указывается в ingress. Для ингрессов рекомендуется использовать домены четвертого уровня по имени команды
+# Результаты тестирования
+
+Отчет о результатах тестирования: [https://drive.google.com/drive/folders/1h23hYD5GqKMugviQxok6dyNNVbRjOIne?usp=sharing](https://drive.google.com/drive/folders/1h23hYD5GqKMugviQxok6dyNNVbRjOIne?usp=sharing)
