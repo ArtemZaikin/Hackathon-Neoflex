@@ -4,7 +4,8 @@
 
 # Информация от аналитиков
 
-Техническое задание находится в [каталоге](https://git.codenrock.com/neo-hack-2024-1232/cnrprod1722867596-team-74124/razrabotka-rabochego-instrumenta-dlya-sinhronizacii-ekspertov-rekrutyorov-i-kandidatov-5883/-/tree/develop/reports?ref_type=heads)
+- [Брифинг с заказчиком](https://drive.google.com/file/d/1W8DdunaPcFoyddwThkOCOoPeKd00REsO/view?usp=sharing)
+- [Техническое задание](https://git.codenrock.com/neo-hack-2024-1232/cnrprod1722867596-team-74124/razrabotka-rabochego-instrumenta-dlya-sinhronizacii-ekspertov-rekrutyorov-i-kandidatov-5883/-/tree/develop/reports?ref_type=heads)
 
 # Запуск приложения для тестирования
 ## Требования
