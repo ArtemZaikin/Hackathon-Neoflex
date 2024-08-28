@@ -1,0 +1,132 @@
+spring:
+  profiles:
+    active: "production"
+---
+spring:
+  config:
+    activate:
+      on-profile: "test"
+  application:
+    name: recruiting
+  jpa:
+    hibernate:
+#      ddl-auto: create
+      ddl-auto: validate
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog.xml
+  mail:
+    host: smtp.yandex.ru
+    port: 587
+    username: Bagy29@yandex.ru
+    password: zancdsmipaxezbcz
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+server:
+  port: 8080
+  shutdown: graceful
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
+recruiting:
+#  встреча отменится если она не подтверждена и осталось меньше времени чем timeBeforeCancelMeetingMin
+  timeBeforeCancelMeetingMin: 60
+#  minTimeBeforeCreateMeetingMin - минимальное время до создания встречи
+  minTimeBeforeCreateMeetingMin: 60
+management:
+  endpoints:
+    web:
+      exposure:
+        include: env
+
+---
+spring:
+  config:
+    activate:
+      on-profile: "develop"
+  application:
+    name: recruiting
+  jpa:
+    hibernate:
+      ddl-auto: validate
+#          ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        format_sql: true
+    show-sql: true
+  datasource:
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/recruiting
+    username: recruiting
+    password: recruiting
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog.xml
+recruiting:
+  #  встреча отменится если она не подтверждена и осталось меньше времени чем timeBeforeCancelMeetingMin
+  timeBeforeCancelMeetingMin: 60
+  #  minTimeBeforeCreateMeetingMin - минимальное время до создания встречи
+  minTimeBeforeCreateMeetingMin: 60
+server:
+  port: 8080
+  shutdown: graceful
+---
+spring:
+  config:
+    activate:
+      on-profile: "production"
+  application:
+    name: recruiting
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog.xml
+  mail:
+    host: smtp.yandex.ru
+    port: 587
+    username: Bagy29@yandex.ru
+    password: zancdsmipaxezbcz
+    test-connection: true
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+#          ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+        format_sql: true
+    show-sql: true
+  datasource:
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://rc1b-wwbzmz7xcyzdmat1.mdb.yandexcloud.net:6432/cnrprod1722867596-team-74124
+    username: cnrprod1722867596-team-74124
+    password: iequ6lug2bohXeocu5fao5aeghi6pohZ
+recruiting:
+  #  встреча отменится если она не подтверждена и осталось меньше времени чем timeBeforeCancelMeetingMin
+  timeBeforeCancelMeetingMin: 60
+  #  minTimeBeforeCreateMeetingMin - минимальное время до создания встречи
+  minTimeBeforeCreateMeetingMin: 60
+server:
+  port: 8080
+  shutdown: graceful
